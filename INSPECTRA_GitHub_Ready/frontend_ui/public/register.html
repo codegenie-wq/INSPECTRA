@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INSPECTRA — Create Operator Account // Vision Quality Engine</title>
+  <meta name="description" content="Register an authorized operator account for INSPECTRA visual quality inspection.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="icon" type="image/png" href="/assets/inspectra-logo.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="inspectra-auth.js"></script>
+</head>
+
+<body class="industrial-theme auth-body">
+
+  <div class="auth-page-container">
+
+    <!-- INDUSTRIAL LOGO / BRANDING -->
+    <div class="auth-brand-block">
+      <img src="/assets/inspectra-logo.png" alt="INSPECTRA Official Logo" class="auth-inspectra-logo">
+      <div class="auth-brand-text">
+        <div class="auth-brand-tag">AI VISION QUALITY INSPECTION // OPERATOR ENROLLMENT</div>
+      </div>
+    </div>
+
+    <!-- REGISTRATION CARD -->
+    <div class="auth-card">
+      <div class="auth-card-header">
+        <div class="auth-card-sys">
+          <span class="status-beacon beacon-emerald"></span>
+          <span>SECURITY DOMAIN: NEW OPERATOR ENROLLMENT</span>
+        </div>
+        <h1 class="auth-card-title">Create Account</h1>
+        <p class="auth-card-desc">Enroll authorized credentials for visual inspection logging.</p>
+      </div>
+
+      <!-- ERROR BANNER -->
+      <div id="register-error-alert" class="auth-error-banner" style="display: none;">
+        <span class="alert-icon">⚠️</span>
+        <span id="register-error-message" class="alert-text">REGISTRATION ERROR</span>
+      </div>
+
+      <!-- REGISTRATION FORM -->
+      <form id="register-form" class="auth-form" autocomplete="on">
+        <div class="auth-field-group">
+          <label for="input-fullname" class="auth-label">FULL NAME</label>
+          <div class="auth-input-wrapper">
+            <span class="input-icon">👤</span>
+            <input
+              type="text"
+              id="input-fullname"
+              class="auth-input"
+              placeholder="e.g. Santhosh Kumar"
+              required
+              autofocus
+            >
+          </div>
+        </div>
+
+        <div class="auth-field-group">
+          <label for="input-email" class="auth-label">CORPORATE EMAIL</label>
+          <div class="auth-input-wrapper">
+            <span class="input-icon">✉️</span>
+            <input
+              type="email"
+              id="input-email"
+              class="auth-input"
+              placeholder="e.g. santhosh@manufacturing.com"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="auth-field-group">
+          <label for="input-username" class="auth-label">USERNAME</label>
+          <div class="auth-input-wrapper">
+            <span class="input-icon">🆔</span>
+            <input
+              type="text"
+              id="input-username"
+              class="auth-input"
+              placeholder="e.g. santhosh"
+              minlength="3"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="auth-field-group">
+          <label for="input-password" class="auth-label">PASSWORD</label>
+          <div class="auth-input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input
+              type="password"
+              id="input-password"
+              class="auth-input"
+              placeholder="Minimum 6 characters"
+              minlength="6"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="auth-field-group">
+          <label for="input-confirm-password" class="auth-label">CONFIRM PASSWORD</label>
+          <div class="auth-input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input
+              type="password"
+              id="input-confirm-password"
+              class="auth-input"
+              placeholder="Repeat password"
+              minlength="6"
+              required
+            >
+          </div>
+        </div>
+
+        <button type="submit" id="btn-register-submit" class="auth-submit-btn">
+          <span class="btn-glow"></span>
+          <span class="btn-text">CREATE OPERATOR ACCOUNT →</span>
+        </button>
+      </form>
+
+      <!-- LOGIN LINK -->
+      <div class="auth-footer-block">
+        <span>Already have an authorized operator account?</span>
+        <a href="/login" class="auth-link">RETURN TO LOGIN</a>
+      </div>
+    </div>
+
+    <!-- INDUSTRIAL FOOTER BADGE -->
+    <div class="auth-page-footer">
+      <span>INSPECTRA VISION OS // VERSION 4.2 · ASTM E381 COMPLIANCE</span>
+    </div>
+
+  </div>
+
+  <script src="register.js"></script>
+</body>
+</html>

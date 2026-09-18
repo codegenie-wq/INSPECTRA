@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INSPECTRA — Dedicated Continuous Live Inspection Console</title>
+  <meta name="description" content="Continuous machine-vision live camera inspection workstation for steel and metal manufacturing quality control.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="icon" type="image/png" href="/assets/inspectra-logo.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="inspectra-auth.js"></script>
+</head>
+
+<body class="industrial-theme">
+
+  <!-- =========================================================
+       GLOBAL HEADER NAVIGATION
+  ========================================================== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="brand-logo" id="nav-brand" title="INSPECTRA Vision OS">
+        <img src="/assets/inspectra-logo.png" alt="INSPECTRA Official Logo" class="header-inspectra-logo">
+        <div class="logo-text-group">
+          <span class="logo-name">INSPECTRA</span>
+          <span class="logo-tag">VISION OS // v4.2</span>
+        </div>
+      </a>
+
+      <button id="btn-nav-toggle" class="btn-nav-toggle" aria-label="Toggle Navigation">☰</button>
+
+      <nav class="nav-links">
+        <a href="/" class="nav-item" title="Image Upload Inspection Studio">
+          Inspection Studio
+        </a>
+        <a href="/live-inspection" class="nav-item active" title="Continuous Live Camera Machine-Vision">
+          Live Inspection
+        </a>
+        <a href="/product-analysis" class="nav-item" title="Product-Level Performance Analytics">
+          Product Analysis
+        </a>
+        <a href="/data-log" class="nav-item nav-item-data-log" id="nav-data-log" title="Complete Production History">
+          Data Log
+        </a>
+        <a href="/reports" class="nav-item" title="Quality Inspection Audit Reports">
+          Reports
+        </a>
+        <a href="/standards" class="nav-item" title="Inspection Methodology & Criteria">
+          Standards
+        </a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="system-status-cluster" id="system-status-cluster">
+          <div class="system-status-indicator" id="status-ai" title="FastAPI Local AI Engine">
+            <span class="status-beacon beacon-emerald" id="status-beacon-ai"></span>
+            <span class="status-label" id="status-label-ai">AI ONLINE</span>
+          </div>
+          <div class="system-status-indicator indicator-cyan" id="status-cam" title="Industrial Vision Camera">
+            <span class="status-beacon beacon-cyan" id="status-beacon-cam"></span>
+            <span class="status-label label-cyan" id="status-label-cam">CAMERA READY</span>
+          </div>
+          <div class="system-status-indicator indicator-cyan" id="status-log" title="Production Data Log">
+            <span class="status-beacon beacon-cyan" id="status-beacon-log"></span>
+            <span class="status-label label-cyan" id="status-label-log">DATA LOG ACTIVE</span>
+          </div>
+        </div>
+
+        <div class="user-profile-group" id="header-user-profile" style="display: flex;">
+          <div class="user-avatar-badge">👤</div>
+          <div class="user-meta-info">
+            <span class="user-operator-title" id="header-operator-name">Santhosh</span>
+            <span class="user-operator-role" id="header-operator-role">AI Inspection Operator</span>
+          </div>
+          <button type="button" class="btn-logout" title="End authenticated session">LOGOUT</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       MAIN LIVE CONSOLE CONTAINER
+  ========================================================== -->
+  <main class="industrial-page-main">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header-strip">
+      <div class="page-title-group">
+        <div class="page-sys-tag">
+          <span class="tag-dot"></span>
+          MACHINE VISION SENSOR CONSOLE // LIVE OPTICAL STREAM
+        </div>
+        <h1 class="page-heading">
+          Continuous Live Inspection
+        </h1>
+        <p class="page-subheading">
+          REAL-TIME DEFECT SEGMENTATION · TEMPORAL SMOOTHING BUFFER · AUTOMATIC SESSION TELEMETRY
+        </p>
+      </div>
+
+      <div class="page-actions-group">
+        <a href="/data-log" class="btn-data-log-action btn-nav-back">
+          📋 VIEW DATA LOG
+        </a>
+      </div>
+    </div>
+
+    <!-- MAIN CAMERA WORKSTATION GRID -->
+    <div style="display: grid; grid-template-columns: 1.8fr 1fr; gap: 24px; align-items: start;">
+
+      <!-- LEFT: CAMERA VIEWPORT & CONTROLS -->
+      <div class="industrial-panel" style="padding: 18px;">
+
+        <!-- CAMERA STATUS BAR -->
+        <div
+          class="camera-status-bar"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 18px;
+            margin-bottom: 14px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+          "
+        >
+          <div style="display: flex; align-items: center; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: 600; color: #fff;">
+            <span>🎥 LIVE CAMERA FEED</span>
+            <span style="color: #6e7681; font-weight: 400;">| 1280×720 HD</span>
+          </div>
+
+          <div
+            id="camera-status"
+            style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; font-weight: 700; color: var(--color-cyan); letter-spacing: 0.05em;"
+          >
+            CAMERA READY
+          </div>
+        </div>
+
+        <!-- VIEWPORT CONTAINER -->
+        <div
+          class="camera-viewport"
+          style="
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            border-radius: 10px;
+            background: #020407;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+          "
+        >
+          <!-- VIDEO STREAM -->
+          <video
+            id="camera-video"
+            autoplay
+            playsinline
+            muted
+            style="
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+              display: block;
+              position: relative;
+              z-index: 1;
+              background: #000;
+            "
+          ></video>
+
+          <!-- TRANSPARENT MACHINE-VISION OVERLAY CANVAS -->
+          <canvas
+            id="camera-canvas"
+            style="
+              display: none;
+              position: absolute;
+              inset: 0;
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+              pointer-events: none;
+              z-index: 2;
+              background: transparent;
+            "
+          ></canvas>
+
+          <!-- TARGETING RETICLE (DEFAULT SEARCH MODE) -->
+          <div
+            id="camera-reticle"
+            class="camera-reticle"
+            style="
+              position: absolute;
+              inset: 14%;
+              border: 1px dashed rgba(0, 240, 255, 0.35);
+              pointer-events: none;
+              z-index: 3;
+            "
+          ></div>
+
+          <div
+            id="camera-reticle-center"
+            class="camera-reticle-center"
+            style="
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              width: 20px;
+              height: 20px;
+              transform: translate(-50%, -50%);
+              border: 1px solid rgba(0, 240, 255, 0.6);
+              border-radius: 50%;
+              pointer-events: none;
+              z-index: 3;
+            "
+          ></div>
+        </div>
+
+        <!-- CAMERA ACTION CONTROLS -->
+        <div
+          class="camera-controls"
+          style="
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+          "
+        >
+          <button
+            type="button"
+            id="btn-start-camera"
+            class="btn-preview-action btn-inspect"
+          >
+            🎥 START CAMERA
+          </button>
+
+          <button
+            type="button"
+            id="btn-start-live-detection"
+            class="btn-preview-action btn-live-inspect"
+            disabled
+            title="Continuously analyze the live camera stream asynchronously with intelligent visual change detection"
+          >
+            ⚡ START LIVE DETECTION
+          </button>
+
+          <button
+            type="button"
+            id="btn-stop-live-detection"
+            class="btn-preview-action btn-remove"
+            style="display: none;"
+            disabled
+          >
+            ⏹ STOP LIVE DETECTION
+          </button>
+
+          <button
+            type="button"
+            id="btn-capture-frame"
+            class="btn-preview-action btn-change"
+            disabled
+          >
+            📸 CAPTURE FRAME
+          </button>
+
+          <button
+            type="button"
+            id="btn-stop-camera"
+            class="btn-preview-action btn-remove"
+            disabled
+          >
+            ⏹ STOP CAMERA
+          </button>
+        </div>
+
+        <div
+          id="camera-capture-message"
+          style="
+            margin-top: 14px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: #8b949e;
+          "
+        >
+          Click START CAMERA to initialize video feed.
+        </div>
+      </div>
+
+      <!-- RIGHT: LIVE TELEMETRY & PRODUCT STATE PANEL -->
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+
+        <!-- ACTIVE INSPECTION HUD CARD -->
+        <div class="industrial-panel" style="margin-bottom: 0;">
+          <div class="industrial-panel-header">
+            <h2 class="industrial-panel-title">
+              <span>🎯</span> ACTIVE PRODUCT UNIT
+            </h2>
+            <span id="live-session-badge" class="badge-count">SESSION ACTIVE</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+
+            <!-- ACTIVE PRODUCT ID HERO -->
+            <div style="background: rgba(0, 0, 0, 0.35); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 8px; padding: 16px;">
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #8b949e; letter-spacing: 0.08em;">
+                PRODUCT SERIAL NUMBER
+              </div>
+              <div id="live-product-id" style="font-family: 'Chakra Petch', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--color-cyan); margin-top: 4px;">
+                STL-2026-00001
+              </div>
+            </div>
+
+            <!-- ACTIVE STATUS VERDICT -->
+            <div id="live-verdict-banner" style="background: rgba(255, 145, 0, 0.08); border: 1px solid rgba(255, 145, 0, 0.3); border-radius: 8px; padding: 14px;">
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #8b949e;">
+                DETECTION CLASSIFICATION
+              </div>
+              <div id="live-verdict-text" style="font-family: 'Chakra Petch', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--color-amber); margin-top: 4px;">
+                🟠 NO PRODUCT DETECTED
+              </div>
+            </div>
+
+            <!-- LIVE TELEMETRY METRICS -->
+            <div class="product-specs-list">
+              <div class="product-spec-row">
+                <span class="spec-name">AI CONFIDENCE</span>
+                <span class="spec-val" id="live-confidence" style="color: var(--color-cyan);">—</span>
+              </div>
+              <div class="product-spec-row">
+                <span class="spec-name">DEFECT CLASSIFICATION</span>
+                <span class="spec-val" id="live-defect">—</span>
+              </div>
+              <div class="product-spec-row">
+                <span class="spec-name">SEVERITY RATING</span>
+                <span class="spec-val" id="live-severity">—</span>
+              </div>
+              <div class="product-spec-row">
+                <span class="spec-name">AFFECTED SURFACE AREA</span>
+                <span class="spec-val" id="live-area">—</span>
+              </div>
+              <div class="product-spec-row">
+                <span class="spec-name">OBJECT BOUNDING BOX</span>
+                <span class="spec-val" id="live-coords" style="font-size: 0.72rem;">—</span>
+              </div>
+            </div>
+
+            <!-- SYSTEM LOG NOTIFICATION -->
+            <div style="background: rgba(0, 240, 255, 0.04); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: 6px; padding: 10px 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #8b949e; line-height: 1.4;">
+              ⚡ <strong>ONE PRODUCT = ONE RECORD</strong>: Inspectra logs one unified record per physical product session into the Data Log. Individual frames are not spammed.
+            </div>
+
+          </div>
+        </div>
+
+        <!-- DETECTION LEGEND -->
+        <div class="industrial-panel" style="padding: 16px;">
+          <div style="font-family: 'Chakra Petch', sans-serif; font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 10px;">
+            HUD TARGETING LEGEND
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="width: 12px; height: 12px; border: 2px solid #00e676; border-radius: 2px; display: inline-block;"></span>
+              <span style="color: #00e676; font-weight: 600;">GREEN BOX</span>: Actual physical steel component
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="width: 12px; height: 12px; border: 2px solid #ff1744; border-radius: 2px; display: inline-block;"></span>
+              <span style="color: #ff1744; font-weight: 600;">RED BOX</span>: Localized surface defect region
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="width: 12px; height: 12px; border: 2px solid #ff9100; border-radius: 2px; display: inline-block;"></span>
+              <span style="color: #ff9100; font-weight: 600;">ORANGE BOX</span>: Manual review / uncertain anomaly
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Load Services & Scripts -->
+  <script src="data-log-service.js"></script>
+  <script src="auth-guard.js"></script>
+  <script src="header-status.js"></script>
+  <script src="live-inspection.js"></script>
+</body>
+</html>

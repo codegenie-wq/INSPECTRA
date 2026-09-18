@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INSPECTRA — Operator Authentication // Quality Vision Engine</title>
+  <meta name="description" content="Secure operator authentication for INSPECTRA visual quality inspection platform.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="icon" type="image/png" href="/assets/inspectra-logo.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="inspectra-auth.js"></script>
+</head>
+
+<body class="industrial-theme auth-body">
+
+  <div class="auth-page-container">
+
+    <!-- INDUSTRIAL LOGO / BRANDING -->
+    <div class="auth-brand-block">
+      <img src="/assets/inspectra-logo.png" alt="INSPECTRA Official Logo" class="auth-inspectra-logo">
+      <div class="auth-brand-text">
+        <div class="auth-brand-tag">AI VISION QUALITY INSPECTION // OPERATOR GATEWAY</div>
+      </div>
+    </div>
+
+    <!-- AUTHENTICATION CARD -->
+    <div class="auth-card">
+      <div class="auth-card-header">
+        <div class="auth-card-sys">
+          <span class="status-beacon beacon-cyan"></span>
+          <span>SECURITY DOMAIN: RESTRICTED ACCESS</span>
+        </div>
+        <h1 class="auth-card-title">Operator Login</h1>
+        <p class="auth-card-desc">Enter authorized credentials to access machine-vision telemetry.</p>
+      </div>
+
+      <!-- ERROR BANNER -->
+      <div id="auth-error-alert" class="auth-error-banner" style="display: none;">
+        <span class="alert-icon">⚠️</span>
+        <span id="auth-error-message" class="alert-text">INVALID CREDENTIALS</span>
+      </div>
+
+      <!-- SUCCESS / INFO BANNER -->
+      <div id="auth-info-alert" class="auth-info-banner" style="display: none;">
+        <span class="alert-icon">ℹ️</span>
+        <span id="auth-info-message" class="alert-text"></span>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form id="login-form" class="auth-form" autocomplete="on">
+        <div class="auth-field-group">
+          <label for="input-identifier" class="auth-label">EMAIL / USERNAME</label>
+          <div class="auth-input-wrapper">
+            <span class="input-icon">👤</span>
+            <input
+              type="text"
+              id="input-identifier"
+              class="auth-input"
+              placeholder="e.g. santhosh or operator1@inspectra.ai"
+              required
+              autofocus
+            >
+          </div>
+        </div>
+
+        <div class="auth-field-group">
+          <label for="input-password" class="auth-label">PASSWORD</label>
+          <div class="auth-input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input
+              type="password"
+              id="input-password"
+              class="auth-input"
+              placeholder="••••••••••••"
+              required
+            >
+          </div>
+        </div>
+
+        <button type="submit" id="btn-login-submit" class="auth-submit-btn">
+          <span class="btn-glow"></span>
+          <span class="btn-text">AUTHENTICATE & ENTER STUDIO →</span>
+        </button>
+      </form>
+
+      <!-- DEMO OPERATOR SHORTCUT PILL -->
+      <div class="auth-demo-helper">
+        <span style="color: #8b949e;">QUICK DEMO CREDENTIALS:</span>
+        <button type="button" id="btn-demo-fill" class="auth-demo-btn" title="Auto-fill Santhosh demo account">
+          OPERATOR: <strong>santhosh</strong> (Password123!)
+        </button>
+      </div>
+
+      <!-- REGISTER LINK -->
+      <div class="auth-footer-block">
+        <span>Don't have an authorized operator account?</span>
+        <a href="/register" class="auth-link">CREATE ACCOUNT // REGISTER</a>
+      </div>
+    </div>
+
+    <!-- INDUSTRIAL FOOTER BADGE -->
+    <div class="auth-page-footer">
+      <span>INSPECTRA VISION OS // VERSION 4.2 · ASTM E381 COMPLIANCE</span>
+    </div>
+
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime/generated data
+backend/uploads/
+test_images/
+scratch/
+dataset/
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/*.log
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Large local artifacts

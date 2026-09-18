@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INSPECTRA — Quality Inspection Executive Summary Report</title>
+  <meta name="description" content="Automated executive quality assurance report and production batch inspection audit summary.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="icon" type="image/png" href="/assets/inspectra-logo.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="inspectra-auth.js"></script>
+</head>
+
+<body class="industrial-theme">
+
+  <!-- =========================================================
+       GLOBAL HEADER NAVIGATION
+  ========================================================== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="brand-logo" id="nav-brand" title="INSPECTRA Vision OS">
+        <img src="/assets/inspectra-logo.png" alt="INSPECTRA Official Logo" class="header-inspectra-logo">
+        <div class="logo-text-group">
+          <span class="logo-name">INSPECTRA</span>
+          <span class="logo-tag">VISION OS // v4.2</span>
+        </div>
+      </a>
+
+      <button id="btn-nav-toggle" class="btn-nav-toggle" aria-label="Toggle Navigation">☰</button>
+
+      <nav class="nav-links">
+        <a href="/" class="nav-item" title="Image Upload Inspection Studio">
+          Inspection Studio
+        </a>
+        <a href="/live-inspection" class="nav-item" title="Continuous Live Camera Machine-Vision">
+          Live Inspection
+        </a>
+        <a href="/product-analysis" class="nav-item" title="Product-Level Performance Analytics">
+          Product Analysis
+        </a>
+        <a href="/data-log" class="nav-item nav-item-data-log" id="nav-data-log" title="Complete Production History">
+          Data Log
+        </a>
+        <a href="/reports" class="nav-item active" title="Quality Inspection Audit Reports">
+          Reports
+        </a>
+        <a href="/standards" class="nav-item" title="Inspection Methodology & Criteria">
+          Standards
+        </a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="system-status-cluster" id="system-status-cluster">
+          <div class="system-status-indicator" id="status-ai" title="FastAPI Local AI Engine">
+            <span class="status-beacon beacon-emerald" id="status-beacon-ai"></span>
+            <span class="status-label" id="status-label-ai">AI ONLINE</span>
+          </div>
+          <div class="system-status-indicator indicator-cyan" id="status-cam" title="Industrial Vision Camera">
+            <span class="status-beacon beacon-cyan" id="status-beacon-cam"></span>
+            <span class="status-label label-cyan" id="status-label-cam">CAMERA READY</span>
+          </div>
+          <div class="system-status-indicator indicator-cyan" id="status-log" title="Production Data Log">
+            <span class="status-beacon beacon-cyan" id="status-beacon-log"></span>
+            <span class="status-label label-cyan" id="status-label-log">DATA LOG ACTIVE</span>
+          </div>
+        </div>
+
+        <div class="user-profile-group" id="header-user-profile" style="display: flex;">
+          <div class="user-avatar-badge">👤</div>
+          <div class="user-meta-info">
+            <span class="user-operator-title" id="header-operator-name">Santhosh</span>
+            <span class="user-operator-role" id="header-operator-role">AI Inspection Operator</span>
+          </div>
+          <button type="button" class="btn-logout" title="End authenticated session">LOGOUT</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       MAIN REPORTS CONTAINER
+  ========================================================== -->
+  <main class="industrial-page-main">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header-strip">
+      <div class="page-title-group">
+        <div class="page-sys-tag">
+          <span class="tag-dot"></span>
+          AUDIT COMPLIANCE // OFFICIAL PRODUCTION INSPECTION REPORT
+        </div>
+        <h1 class="page-heading">
+          Inspection Report
+        </h1>
+        <p class="page-subheading">
+          COMPREHENSIVE BATCH AUDIT · ASTM E381 DEFECT INCIDENCE · EXECUTIVE QA CERTIFICATE
+        </p>
+      </div>
+
+      <div class="page-actions-group">
+        <button
+          id="btn-export-report"
+          class="btn-data-log-action btn-primary-tool"
+          title="Print or Save Report as PDF"
+        >
+          🖨️ EXPORT REPORT (PDF / PRINT)
+        </button>
+
+        <button
+          id="btn-export-report-csv"
+          class="btn-data-log-action btn-change"
+          title="Download raw inspection records as CSV"
+        >
+          📥 EXPORT CSV
+        </button>
+      </div>
+    </div>
+
+    <!-- EMPTY STATE NOTIFICATION -->
+    <div id="report-empty-state" class="empty-state-card" style="display: none;">
+      <div class="empty-state-icon">📄</div>
+      <h3 class="empty-state-title">NO INSPECTION DATA AVAILABLE</h3>
+      <p class="empty-state-sub">
+        No completed product records exist to generate an audit report.<br>
+        Run inspections in the Inspection Studio or Live Camera to populate report data.
+      </p>
+      <a href="/" class="btn-data-log-action btn-primary-tool" style="display: inline-block;">
+        🚀 GO TO INSPECTION STUDIO
+      </a>
+    </div>
+
+    <!-- REPORT DOCUMENT PANEL -->
+    <div id="report-document-panel" class="industrial-panel" style="padding: 32px;">
+
+      <!-- FORMAL REPORT HEADER -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 24px; border-bottom: 2px solid rgba(0, 240, 255, 0.3); margin-bottom: 28px; flex-wrap: wrap; gap: 20px;">
+        <div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--color-cyan); letter-spacing: 0.1em; font-weight: 600;">
+            INSPECTRA AUTOMATED VISION AUDIT
+          </div>
+          <h2 style="font-family: 'Chakra Petch', sans-serif; font-size: 1.6rem; color: #fff; margin: 4px 0 6px 0; font-weight: 700;">
+            PRODUCTION QUALITY INSPECTION REPORT
+          </h2>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #8b949e;">
+            STANDARD: ASTM E381 / ISO 9001 VISION AUDIT SPECIFICATION
+          </div>
+        </div>
+
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #c9d1d9;">
+          <div>REPORT PERIOD: <strong id="report-period" style="color: #fff;">ALL RECORDED SESSIONS</strong></div>
+          <div style="margin-top: 4px;">GENERATED AT: <strong id="report-generated-time" style="color: var(--color-cyan);">—</strong></div>
+          <div style="margin-top: 4px;">DATA SOURCE: <strong style="color: #00e676;">CENTRAL DATA LOG</strong></div>
+        </div>
+      </div>
+
+      <!-- KEY PRODUCTION METRICS GRID -->
+      <div style="margin-bottom: 32px;">
+        <div style="font-family: 'Chakra Petch', sans-serif; font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 14px; text-transform: uppercase;">
+          1. PRODUCTION BATCH SUMMARY
+        </div>
+
+        <div class="telemetry-kpi-grid" style="margin-bottom: 0;">
+          <div class="telemetry-kpi-card kpi-total">
+            <div class="kpi-label">TOTAL PRODUCTS</div>
+            <div id="report-total" class="kpi-val">0</div>
+            <div class="kpi-sub">TOTAL AUDITED</div>
+          </div>
+
+          <div class="telemetry-kpi-card kpi-pass">
+            <div class="kpi-label">PASSED</div>
+            <div id="report-pass" class="kpi-val val-pass">0</div>
+            <div id="report-pass-rate" class="kpi-sub">PASS RATE: 0%</div>
+          </div>
+
+          <div class="telemetry-kpi-card kpi-fail">
+            <div class="kpi-label">FAILED</div>
+            <div id="report-fail" class="kpi-val val-fail">0</div>
+            <div id="report-defect-rate" class="kpi-sub">DEFECT RATE: 0%</div>
+          </div>
+
+          <div class="telemetry-kpi-card kpi-review">
+            <div class="kpi-label">REVIEW</div>
+            <div id="report-review" class="kpi-val val-review">0</div>
+            <div class="kpi-sub">MANUAL QA AUDIT</div>
+          </div>
+
+          <div class="telemetry-kpi-card" style="border-left: 3px solid var(--color-cyan);">
+            <div class="kpi-label">AVERAGE CONFIDENCE</div>
+            <div id="report-avg-confidence" class="kpi-val" style="color: var(--color-cyan);">0%</div>
+            <div class="kpi-sub">MEAN MODEL CERTAINTY</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEVERITY BREAKDOWN METRICS -->
+      <div style="margin-bottom: 32px;">
+        <div style="font-family: 'Chakra Petch', sans-serif; font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 14px; text-transform: uppercase;">
+          2. DEFECT SEVERITY INCIDENCE
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+          <div class="severity-dist-card sev-card-high">
+            <div class="severity-card-label">HIGH SEVERITY DEFECTS</div>
+            <div id="report-sev-high" class="severity-card-val" style="color: var(--color-crimson);">0</div>
+            <div class="severity-card-pct">&gt; 5% AFFECTED AREA · IMMEDIATE REJECT</div>
+          </div>
+
+          <div class="severity-dist-card sev-card-med">
+            <div class="severity-card-label">MEDIUM SEVERITY DEFECTS</div>
+            <div id="report-sev-med" class="severity-card-val" style="color: var(--color-amber);">0</div>
+            <div class="severity-card-pct">1%–5% AFFECTED AREA · SECONDARY REVIEW</div>
+          </div>
+
+          <div class="severity-dist-card sev-card-low">
+            <div class="severity-card-label">LOW SEVERITY DEFECTS</div>
+            <div id="report-sev-low" class="severity-card-val" style="color: var(--color-emerald);">0</div>
+            <div class="severity-card-pct">&lt; 1% AFFECTED AREA · MINOR BLEMISH</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2-COLUMN SECTION: TOP DEFECTS & RECENT INSPECTIONS -->
+      <div style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 28px; margin-bottom: 24px;">
+
+        <!-- TOP DETECTED DEFECTS -->
+        <div>
+          <div style="font-family: 'Chakra Petch', sans-serif; font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 14px; text-transform: uppercase;">
+            3. TOP DETECTED DEFECTS
+          </div>
+
+          <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 18px;">
+            <div id="report-top-defects-list" style="display: flex; flex-direction: column; gap: 12px;">
+              <!-- Dynamic top defects list -->
+            </div>
+          </div>
+        </div>
+
+        <!-- RECENT INSPECTIONS -->
+        <div>
+          <div style="font-family: 'Chakra Petch', sans-serif; font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 14px; text-transform: uppercase;">
+            4. RECENT INSPECTIONS
+          </div>
+
+          <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; overflow: hidden;">
+            <table class="telemetry-table" style="font-size: 0.78rem;">
+              <thead>
+                <tr>
+                  <th>PRODUCT ID</th>
+                  <th>DECISION</th>
+                  <th>DEFECT</th>
+                  <th>SEVERITY</th>
+                  <th>CONFIDENCE</th>
+                </tr>
+              </thead>
+              <tbody id="report-recent-tbody">
+                <!-- Dynamic recent inspections -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- OFFICIAL AUDIT FOOTER NOTE -->
+      <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #6e7681; flex-wrap: wrap; gap: 12px;">
+        <span>INSPECTRA OPTICAL TELEMETRY OS // REPORT GENERATOR v4.2</span>
+        <span>ELECTRONICALLY CERTIFIED GROUND TRUTH DATA</span>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Load Services & Scripts -->
+  <script src="data-log-service.js"></script>
+  <script src="auth-guard.js"></script>
+  <script src="header-status.js"></script>
+  <script src="reports.js"></script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INSPECTRA — Inspection Criteria, AI Methodology & Technical Standards</title>
+  <meta name="description" content="Technical documentation of INSPECTRA AI defect classification, autoencoder anomaly scanning, Grad-CAM localization, and prototype severity heuristics.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="icon" type="image/png" href="/assets/inspectra-logo.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="inspectra-auth.js"></script>
+</head>
+
+<body class="industrial-theme">
+
+  <!-- =========================================================
+       GLOBAL HEADER NAVIGATION
+  ========================================================== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="brand-logo" id="nav-brand" title="INSPECTRA Vision OS">
+        <img src="/assets/inspectra-logo.png" alt="INSPECTRA Official Logo" class="header-inspectra-logo">
+        <div class="logo-text-group">
+          <span class="logo-name">INSPECTRA</span>
+          <span class="logo-tag">VISION OS // v4.2</span>
+        </div>
+      </a>
+
+      <button id="btn-nav-toggle" class="btn-nav-toggle" aria-label="Toggle Navigation">☰</button>
+
+      <nav class="nav-links">
+        <a href="/" class="nav-item" title="Image Upload Inspection Studio">
+          Inspection Studio
+        </a>
+        <a href="/live-inspection" class="nav-item" title="Continuous Live Camera Machine-Vision">
+          Live Inspection
+        </a>
+        <a href="/product-analysis" class="nav-item" title="Product-Level Performance Analytics">
+          Product Analysis
+        </a>
+        <a href="/data-log" class="nav-item nav-item-data-log" id="nav-data-log" title="Complete Production History">
+          Data Log
+        </a>
+        <a href="/reports" class="nav-item" title="Quality Inspection Audit Reports">
+          Reports
+        </a>
+        <a href="/standards" class="nav-item active" title="Inspection Methodology & Criteria">
+          Standards
+        </a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="system-status-cluster" id="system-status-cluster">
+          <div class="system-status-indicator" id="status-ai" title="FastAPI Local AI Engine">
+            <span class="status-beacon beacon-emerald" id="status-beacon-ai"></span>
+            <span class="status-label" id="status-label-ai">AI ONLINE</span>
+          </div>
+          <div class="system-status-indicator indicator-cyan" id="status-cam" title="Industrial Vision Camera">
+            <span class="status-beacon beacon-cyan" id="status-beacon-cam"></span>
+            <span class="status-label label-cyan" id="status-label-cam">CAMERA READY</span>
+          </div>
+          <div class="system-status-indicator indicator-cyan" id="status-log" title="Production Data Log">
+            <span class="status-beacon beacon-cyan" id="status-beacon-log"></span>
+            <span class="status-label label-cyan" id="status-label-log">DATA LOG ACTIVE</span>
+          </div>
+        </div>
+
+        <div class="user-profile-group" id="header-user-profile" style="display: flex;">
+          <div class="user-avatar-badge">👤</div>
+          <div class="user-meta-info">
+            <span class="user-operator-title" id="header-operator-name">Santhosh</span>
+            <span class="user-operator-role" id="header-operator-role">AI Inspection Operator</span>
+          </div>
+          <button type="button" class="btn-logout" title="End authenticated session">LOGOUT</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       MAIN STANDARDS CONTAINER
+  ========================================================== -->
+  <main class="industrial-page-main">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header-strip">
+      <div class="page-title-group">
+        <div class="page-sys-tag">
+          <span class="tag-dot"></span>
+          METHODOLOGY & AUDIT SPECIFICATIONS // AI ENGINE STANDARDS
+        </div>
+        <h1 class="page-heading">
+          Inspection Standards & Methodology
+        </h1>
+        <p class="page-subheading">
+          AI CLASSIFICATION TAXONOMY · AUTOENCODER ANOMALY SCANNING · LOCALIZATION PROTOCOLS · PROTOTYPE HEURISTICS
+        </p>
+      </div>
+
+      <div class="page-actions-group">
+        <a href="/" class="btn-data-log-action btn-primary-tool">
+          🚀 INSPECTION STUDIO
+        </a>
+      </div>
+    </div>
+
+    <!-- 1. INSPECTION CRITERIA & OVERVIEW -->
+    <div class="industrial-panel">
+      <div class="industrial-panel-header">
+        <h2 class="industrial-panel-title">
+          <span>📋</span> INSPECTION CRITERIA
+        </h2>
+        <span class="badge-count">TRI-ENGINE ARCHITECTURE</span>
+      </div>
+
+      <div style="font-size: 0.9rem; color: #c9d1d9; line-height: 1.7;">
+        <p style="margin: 0 0 14px 0;">
+          INSPECTRA combines high-speed deep convolutional classification, unsupervised reconstruction anomaly detection, and visual gradient-weighted localization to audit hot-rolled and cold-rolled steel surfaces.
+        </p>
+        <p style="margin: 0;">
+          Every incoming frame or uploaded component undergoes synchronized physical product isolation, background suppression, defect classification across standardized classes, and open-set anomaly verification.
+        </p>
+      </div>
+    </div>
+
+    <!-- 2. AI CLASSIFICATION (6 DEFECT CLASSES) -->
+    <div class="industrial-panel">
+      <div class="industrial-panel-header">
+        <h2 class="industrial-panel-title">
+          <span>🧠</span> AI DEFECT CLASSIFICATION
+        </h2>
+        <span class="badge-count">MOBILENETV2 // 6 CLASSES</span>
+      </div>
+
+      <p style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #8b949e; margin: 0 0 20px 0;">
+        Fine-tuned deep convolutional classifier trained on NEU Surface Defect Database benchmark:
+      </p>
+
+      <div class="standards-grid">
+        <div class="standard-card">
+          <div class="standard-card-header">
+            <span>1. CRAZING</span>
+          </div>
+          <div class="standard-card-body">
+            Micro-crack networks and stress fissures developing on the metal surface due to rapid thermal fluctuations, uneven rolling contraction, or surface embrittlement.
+          </div>
+        </div>
+
+        <div class="standard-card">
+          <div class="standard-card-header">
+            <span>2. INCLUSION</span>
+          </div>
+          <div class="standard-card-body">
+            Non-metallic impurities, slag entrapment, or refractory particles embedded into the molten steel during continuous casting and subsequent roll passes.
+          </div>
+        </div>
+
+        <div class="standard-card">
+          <div class="standard-card-header">
+            <span>3. PATCHES</span>
+          </div>
+          <div class="standard-card-body">
+            Irregular localized superficial oxide crusts, scabs, or lamination patches pressed flat into the metal substrate during roughing rolling stands.
+          </div>
+        </div>
+
+        <div class="standard-card">
+          <div class="standard-card-header">
+            <span>4. PITTED SURFACE</span>
+          </div>
+          <div class="standard-card-body">
+            Cavities, micro-voids, and localized chemical or acid-bath etch depressions caused by de-scaling inconsistencies or surface gas bubbles during cooling.
+          </div>
+        </div>
+
+        <div class="standard-card">
+          <div class="standard-card-header">
+            <span>5. ROLLED-IN SCALE</span>
+          </div>
+          <div class="standard-card-body">
+            Iron oxide mill scale fragments that failed hydraulic de-scaling and were subsequently rolled directly into the steel surface, causing dark indented streaks.
+          </div>
+        </div>
+
+        <div class="standard-card">
+          <div class="standard-card-header">
+            <span>6. SCRATCHES</span>
+          </div>
+          <div class="standard-card-body">
+            Linear abrasions, longitudinal gouges, and mechanical scoring inflicted by worn roll guides, transfer conveyors, or coiling friction along the rolling axis.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. ANOMALY DETECTION & LOCALIZATION -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px;">
+
+      <!-- ANOMALY DETECTION -->
+      <div class="industrial-panel" style="margin-bottom: 0;">
+        <div class="industrial-panel-header">
+          <h2 class="industrial-panel-title">
+            <span>🔍</span> ANOMALY DETECTION
+          </h2>
+          <span class="badge-count">AUTOENCODER SCAN</span>
+        </div>
+
+        <div style="font-size: 0.88rem; color: #c9d1d9; line-height: 1.6;">
+          <p style="margin: 0 0 12px 0;">
+            The convolutional <strong>Autoencoder</strong> identifies visual deviations from learned pseudo-normal metal surface textures.
+          </p>
+          <p style="margin: 0;">
+            Unlike closed-set classifiers, the Autoencoder reconstructs the input image and computes the pixel-level Mean Squared Error (MSE). When the reconstruction residual surpasses the calibrated baseline, the component is flagged as an anomaly even if the defect pattern is novel or open-set.
+          </p>
+        </div>
+      </div>
+
+      <!-- LOCALIZATION -->
+      <div class="industrial-panel" style="margin-bottom: 0;">
+        <div class="industrial-panel-header">
+          <h2 class="industrial-panel-title">
+            <span>🎯</span> DEFECT LOCALIZATION
+          </h2>
+          <span class="badge-count">GRAD-CAM HEATMAPS</span>
+        </div>
+
+        <div style="font-size: 0.88rem; color: #c9d1d9; line-height: 1.6;">
+          <p style="margin: 0 0 12px 0;">
+            <strong>Grad-CAM (Gradient-Weighted Class Activation Mapping)</strong> calculates gradients flowing into the final convolutional feature maps with respect to the predicted defect category.
+          </p>
+          <p style="margin: 0;">
+            This provides direct visual evidence for the predicted defect region, projecting bounding coordinates and calculating the precise percentage of affected surface area.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 4. SEVERITY HEURISTICS (CLEARLY LABELED AS PROTOTYPE) -->
+    <div class="industrial-panel">
+      <div class="industrial-panel-header">
+        <h2 class="industrial-panel-title">
+          <span>⚠️</span> SEVERITY HEURISTICS
+        </h2>
+        <span class="badge-count" style="background: rgba(255, 145, 0, 0.15); color: var(--color-amber); border-color: rgba(255, 145, 0, 0.3);">
+          PROTOTYPE HEURISTICS
+        </span>
+      </div>
+
+      <!-- PROTOTYPE DISCLAIMER BANNER -->
+      <div class="prototype-disclaimer-box">
+        <span class="disclaimer-icon">⚠️</span>
+        <div>
+          <div class="prototype-disclaimer-title">IMPORTANT NOTICE: PROTOTYPE SEVERITY HEURISTICS</div>
+          <p class="prototype-disclaimer-desc">
+            The thresholds below are <strong>PROTOTYPE SEVERITY HEURISTICS</strong> implemented for hackathon demonstration and experimental evaluation. They do <strong>NOT</strong> constitute official mill certifications or finalized ASTM industrial standards. Production deployment requires calibration against specific customer metallurgy tolerances.
+          </p>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px;">
+        <div class="severity-dist-card sev-card-low">
+          <div class="severity-card-label" style="color: var(--color-emerald);">LOW SEVERITY</div>
+          <div style="font-family: 'Chakra Petch', sans-serif; font-size: 1.3rem; font-weight: 700; color: #fff;">
+            &lt; 1.0% AREA
+          </div>
+          <div style="font-size: 0.76rem; color: #8b949e; line-height: 1.4;">
+            Localized cosmetic surface imperfection with negligible impact on tensile or rolling integrity.
+          </div>
+        </div>
+
+        <div class="severity-dist-card sev-card-med">
+          <div class="severity-card-label" style="color: var(--color-amber);">MEDIUM SEVERITY</div>
+          <div style="font-family: 'Chakra Petch', sans-serif; font-size: 1.3rem; font-weight: 700; color: #fff;">
+            1.0% – 5.0% AREA
+          </div>
+          <div style="font-size: 0.76rem; color: #8b949e; line-height: 1.4;">
+            Moderate surface anomaly requiring metallurgical review or secondary finishing polish before dispatch.
+          </div>
+        </div>
+
+        <div class="severity-dist-card sev-card-high">
+          <div class="severity-card-label" style="color: var(--color-crimson);">HIGH SEVERITY</div>
+          <div style="font-family: 'Chakra Petch', sans-serif; font-size: 1.3rem; font-weight: 700; color: #fff;">
+            &gt; 5.0% AREA
+          </div>
+          <div style="font-size: 0.76rem; color: #8b949e; line-height: 1.4;">
+            Critical structural flaw exceeding acceptable ASTM tolerance. Automatic rejection and quarantine.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. PERFORMANCE TARGETS (CLEARLY LABELED AS TARGETS) -->
+    <div class="industrial-panel">
+      <div class="industrial-panel-header">
+        <h2 class="industrial-panel-title">
+          <span>🎯</span> TARGET OUTCOMES
+        </h2>
+        <span class="badge-count">ENGINEERING OBJECTIVES</span>
+      </div>
+
+      <p style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #8b949e; margin: 0 0 16px 0;">
+        Note: These values are <strong>DESIGN TARGETS</strong> for production deployment unless experimentally validated on benchmark test datasets.
+      </p>
+
+      <div class="target-outcomes-grid">
+        <div class="target-outcome-card">
+          <div class="target-outcome-val">&gt;95%</div>
+          <div class="target-outcome-label">DETECTION ACCURACY</div>
+          <div class="target-outcome-sub">Target classification accuracy on held-out test surface benchmarks.</div>
+        </div>
+
+        <div class="target-outcome-card">
+          <div class="target-outcome-val">&lt;200ms</div>
+          <div class="target-outcome-label">TARGET INFERENCE LATENCY</div>
+          <div class="target-outcome-sub">Target inference latency budget for continuous real-time conveyor inspection.</div>
+        </div>
+
+        <div class="target-outcome-card">
+          <div class="target-outcome-val">Pixel-Level</div>
+          <div class="target-outcome-label">VISUAL LOCALIZATION</div>
+          <div class="target-outcome-sub">Grad-CAM gradient activation mapping bounding defect regions.</div>
+        </div>
+
+        <div class="target-outcome-card">
+          <div class="target-outcome-val">Open-Set</div>
+          <div class="target-outcome-label">ANOMALY FLAGGING</div>
+          <div class="target-outcome-sub">Unknown anomalies flagged via Autoencoder MSE rather than falsely guessed.</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Load Services & Scripts -->
+  <script src="data-log-service.js"></script>
+  <script src="auth-guard.js"></script>
+  <script src="header-status.js"></script>
+</body>
+</html>

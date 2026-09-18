@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INSPECTRA — Product Performance Analysis & Unit Telemetry</title>
+  <meta name="description" content="Unit-level inspection performance, telemetry audit, and individual product specifications.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="icon" type="image/png" href="/assets/inspectra-logo.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="inspectra-auth.js"></script>
+</head>
+
+<body class="industrial-theme">
+
+  <!-- =========================================================
+       GLOBAL HEADER NAVIGATION
+  ========================================================== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="brand-logo" id="nav-brand" title="INSPECTRA Vision OS">
+        <img src="/assets/inspectra-logo.png" alt="INSPECTRA Official Logo" class="header-inspectra-logo">
+        <div class="logo-text-group">
+          <span class="logo-name">INSPECTRA</span>
+          <span class="logo-tag">VISION OS // v4.2</span>
+        </div>
+      </a>
+
+      <button id="btn-nav-toggle" class="btn-nav-toggle" aria-label="Toggle Navigation">☰</button>
+
+      <nav class="nav-links">
+        <a href="/" class="nav-item" title="Image Upload Inspection Studio">
+          Inspection Studio
+        </a>
+        <a href="/live-inspection" class="nav-item" title="Continuous Live Camera Machine-Vision">
+          Live Inspection
+        </a>
+        <a href="/product-analysis" class="nav-item active" title="Product-Level Performance Analytics">
+          Product Analysis
+        </a>
+        <a href="/data-log" class="nav-item nav-item-data-log" id="nav-data-log" title="Complete Production History">
+          Data Log
+        </a>
+        <a href="/reports" class="nav-item" title="Quality Inspection Audit Reports">
+          Reports
+        </a>
+        <a href="/standards" class="nav-item" title="Inspection Methodology & Criteria">
+          Standards
+        </a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="system-status-cluster" id="system-status-cluster">
+          <div class="system-status-indicator" id="status-ai" title="FastAPI Local AI Engine">
+            <span class="status-beacon beacon-emerald" id="status-beacon-ai"></span>
+            <span class="status-label" id="status-label-ai">AI ONLINE</span>
+          </div>
+          <div class="system-status-indicator indicator-cyan" id="status-cam" title="Industrial Vision Camera">
+            <span class="status-beacon beacon-cyan" id="status-beacon-cam"></span>
+            <span class="status-label label-cyan" id="status-label-cam">CAMERA READY</span>
+          </div>
+          <div class="system-status-indicator indicator-cyan" id="status-log" title="Production Data Log">
+            <span class="status-beacon beacon-cyan" id="status-beacon-log"></span>
+            <span class="status-label label-cyan" id="status-label-log">DATA LOG ACTIVE</span>
+          </div>
+        </div>
+
+        <div class="user-profile-group" id="header-user-profile" style="display: flex;">
+          <div class="user-avatar-badge">👤</div>
+          <div class="user-meta-info">
+            <span class="user-operator-title" id="header-operator-name">Santhosh</span>
+            <span class="user-operator-role" id="header-operator-role">AI Inspection Operator</span>
+          </div>
+          <button type="button" class="btn-logout" title="End authenticated session">LOGOUT</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       MAIN PRODUCT ANALYSIS CONTAINER
+  ========================================================== -->
+  <main class="industrial-page-main">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header-strip">
+      <div class="page-title-group">
+        <div class="page-sys-tag">
+          <span class="tag-dot"></span>
+          UNIT QUALITY AUDIT // PRODUCT PERFORMANCE TELEMETRY
+        </div>
+        <h1 class="page-heading">
+          Product Analysis
+        </h1>
+        <p class="page-subheading">
+          PRODUCT-LEVEL INSPECTION PERFORMANCE · INDIVIDUAL UNIT VERIFICATION · CENTRAL DATA LOG GROUND TRUTH
+        </p>
+      </div>
+
+      <div class="page-actions-group">
+        <div style="position: relative;">
+          <input
+            type="text"
+            id="product-search-input"
+            placeholder="🔍 SEARCH PRODUCT ID..."
+            style="
+              background: rgba(0, 0, 0, 0.4);
+              border: 1px solid rgba(255, 255, 255, 0.15);
+              border-radius: 6px;
+              padding: 8px 14px;
+              color: #fff;
+              font-family: 'JetBrains Mono', monospace;
+              font-size: 0.8rem;
+              width: 220px;
+            "
+          >
+        </div>
+        <a href="/data-log" class="btn-data-log-action btn-primary-tool">
+          📋 COMPLETE LOG
+        </a>
+      </div>
+    </div>
+
+    <!-- SUMMARY CARDS (Derived from same central DataLogService) -->
+    <div class="telemetry-kpi-grid">
+      <div class="telemetry-kpi-card kpi-total">
+        <div class="kpi-label">TOTAL PRODUCTS</div>
+        <div id="stat-total-products" class="kpi-val">0</div>
+        <div class="kpi-sub">CENTRAL DATA LOG</div>
+      </div>
+
+      <div class="telemetry-kpi-card kpi-pass">
+        <div class="kpi-label">🟢 PASSED</div>
+        <div id="stat-passed" class="kpi-val val-pass">0</div>
+        <div class="kpi-sub">ASTM COMPLIANT</div>
+      </div>
+
+      <div class="telemetry-kpi-card kpi-fail">
+        <div class="kpi-label">🔴 FAILED</div>
+        <div id="stat-failed" class="kpi-val val-fail">0</div>
+        <div class="kpi-sub">REJECTED DEFECTS</div>
+      </div>
+
+      <div class="telemetry-kpi-card kpi-review">
+        <div class="kpi-label">🟠 REVIEW</div>
+        <div id="stat-review" class="kpi-val val-review">0</div>
+        <div class="kpi-sub">QA AUDIT REQUIRED</div>
+      </div>
+
+      <div class="telemetry-kpi-card kpi-rate">
+        <div class="kpi-label">PASS RATE</div>
+        <div id="stat-pass-rate" class="kpi-val val-rate">0%</div>
+        <div class="kpi-sub">PRODUCTION YIELD</div>
+      </div>
+    </div>
+
+    <!-- EMPTY STATE NOTIFICATION (WHEN 0 RECORDS) -->
+    <div id="empty-state-banner" class="empty-state-card" style="display: none;">
+      <div class="empty-state-icon">📦</div>
+      <h3 class="empty-state-title">NO INSPECTION DATA AVAILABLE</h3>
+      <p class="empty-state-sub">
+        Start an inspection in the Inspection Studio or run the continuous Live Camera to populate this dashboard.
+      </p>
+      <a href="/" class="btn-data-log-action btn-primary-tool" style="display: inline-block;">
+        🚀 GO TO INSPECTION STUDIO
+      </a>
+    </div>
+
+    <!-- 2-COLUMN PRODUCT PERFORMANCE & DETAILS SECTION -->
+    <div id="product-content-section" class="product-analysis-layout">
+
+      <!-- LEFT: PRODUCT PERFORMANCE TABLE -->
+      <div class="industrial-panel" style="padding: 0; overflow: hidden;">
+        <div style="padding: 20px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center;">
+          <h2 class="industrial-panel-title">
+            <span>📊</span> PRODUCT PERFORMANCE
+          </h2>
+          <span id="product-table-count" class="badge-count">0 UNITS</span>
+        </div>
+
+        <div class="telemetry-table-wrap" style="max-height: 540px;">
+          <table class="telemetry-table">
+            <thead>
+              <tr>
+                <th style="min-width: 140px;">PRODUCT ID</th>
+                <th style="min-width: 110px;">DECISION</th>
+                <th style="min-width: 110px;">CONFIDENCE</th>
+                <th style="min-width: 140px;">DEFECT</th>
+                <th style="min-width: 90px;">DETAILS</th>
+              </tr>
+            </thead>
+            <tbody id="product-performance-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- RIGHT: SELECTED PRODUCT DETAILS CARD -->
+      <div class="product-detail-card">
+        <div class="product-detail-hero">
+          <div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #8b949e; letter-spacing: 0.08em;">
+              PRODUCT DETAILS
+            </div>
+            <h3 id="detail-product-id" class="product-detail-id">
+              SELECT A PRODUCT
+            </h3>
+            <div id="detail-inspection-time" class="product-detail-time">
+              INSPECTION TIME: —
+            </div>
+          </div>
+
+          <div id="detail-decision-badge">
+            <span class="badge-decision badge-review">🟠 SELECT UNIT</span>
+          </div>
+        </div>
+
+        <!-- SPECIFICATIONS LIST -->
+        <div class="product-specs-list">
+          <div class="product-spec-row">
+            <span class="spec-name">DECISION</span>
+            <span id="detail-decision" class="spec-val">—</span>
+          </div>
+          <div class="product-spec-row">
+            <span class="spec-name">STATUS</span>
+            <span id="detail-status" class="spec-val">—</span>
+          </div>
+          <div class="product-spec-row">
+            <span class="spec-name">AI CONFIDENCE</span>
+            <span id="detail-confidence" class="spec-val" style="color: var(--color-cyan);">—</span>
+          </div>
+          <div class="product-spec-row">
+            <span class="spec-name">DEFECT TYPE</span>
+            <span id="detail-defect" class="spec-val">—</span>
+          </div>
+          <div class="product-spec-row">
+            <span class="spec-name">SEVERITY</span>
+            <span id="detail-severity" class="spec-val">—</span>
+          </div>
+          <div class="product-spec-row">
+            <span class="spec-name">AFFECTED AREA</span>
+            <span id="detail-area" class="spec-val">—</span>
+          </div>
+          <div class="product-spec-row">
+            <span class="spec-name">LOCATION</span>
+            <span id="detail-location" class="spec-val" style="font-size: 0.72rem;">—</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px; padding: 12px; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #8b949e;">
+          ℹ️ Click any row in the Product Performance table to inspect full localization coordinates and quality metrics.
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Load Services & Scripts -->
+  <script src="data-log-service.js"></script>
+  <script src="auth-guard.js"></script>
+  <script src="header-status.js"></script>
+  <script src="product-analysis.js"></script>
+</body>
+</html>

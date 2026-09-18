@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INSPECTRA — Production Data Log & Quality Inspection History</title>
+  <meta name="description" content="Persistent production telemetry and inspection history for steel and metal quality assurance.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="icon" type="image/png" href="/assets/inspectra-logo.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="inspectra-auth.js"></script>
+</head>
+
+<body class="industrial-theme">
+
+  <!-- =========================================================
+       SITE HEADER
+  ========================================================== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="brand-logo" id="nav-brand" title="INSPECTRA Vision OS">
+        <img src="/assets/inspectra-logo.png" alt="INSPECTRA Official Logo" class="header-inspectra-logo">
+        <div class="logo-text-group">
+          <span class="logo-name">INSPECTRA</span>
+          <span class="logo-tag">VISION OS // v4.2</span>
+        </div>
+      </a>
+
+      <button id="btn-nav-toggle" class="btn-nav-toggle" aria-label="Toggle Navigation">☰</button>
+
+      <nav class="nav-links">
+        <a href="/" class="nav-item" title="Image Upload Inspection Studio">
+          Inspection Studio
+        </a>
+        <a href="/live-inspection" class="nav-item" title="Continuous Live Camera Machine-Vision">
+          Live Inspection
+        </a>
+        <a href="/product-analysis" class="nav-item" title="Product-Level Performance Analytics">
+          Product Analysis
+        </a>
+        <a href="/data-log" class="nav-item active nav-item-data-log" id="nav-data-log" title="Complete Production History">
+          Data Log
+        </a>
+        <a href="/reports" class="nav-item" title="Quality Inspection Audit Reports">
+          Reports
+        </a>
+        <a href="/standards" class="nav-item" title="Inspection Methodology & Criteria">
+          Standards
+        </a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="system-status-cluster" id="system-status-cluster">
+          <div class="system-status-indicator" id="status-ai" title="FastAPI Local AI Engine">
+            <span class="status-beacon beacon-emerald" id="status-beacon-ai"></span>
+            <span class="status-label" id="status-label-ai">AI ONLINE</span>
+          </div>
+          <div class="system-status-indicator indicator-cyan" id="status-cam" title="Industrial Vision Camera">
+            <span class="status-beacon beacon-cyan" id="status-beacon-cam"></span>
+            <span class="status-label label-cyan" id="status-label-cam">CAMERA READY</span>
+          </div>
+          <div class="system-status-indicator indicator-cyan" id="status-log" title="Production Data Log">
+            <span class="status-beacon beacon-cyan" id="status-beacon-log"></span>
+            <span class="status-label label-cyan" id="status-label-log">DATA LOG ACTIVE</span>
+          </div>
+        </div>
+
+        <div class="user-profile-group" id="header-user-profile" style="display: flex;">
+          <div class="user-avatar-badge">👤</div>
+          <div class="user-meta-info">
+            <span class="user-operator-title" id="header-operator-name">Santhosh</span>
+            <span class="user-operator-role" id="header-operator-role">AI Inspection Operator</span>
+          </div>
+          <button type="button" class="btn-logout" title="End authenticated session">LOGOUT</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       MAIN DATA LOG CONTAINER
+  ========================================================== -->
+  <main class="data-log-main">
+
+    <!-- HEADER BLOCK -->
+    <div class="data-log-header-section">
+      <div class="data-log-title-area">
+        <div class="data-log-sys-tag">
+          <span class="live-dot" style="width:8px; height:8px; border-radius:50%; background:#00f0ff; box-shadow:0 0 10px #00f0ff;"></span>
+          INSPECTRA // PRODUCTION AUDIT SUITE
+        </div>
+        <h1 class="data-log-heading">
+          Production Data Log
+        </h1>
+        <p class="data-log-subheading">
+          PRODUCT INSPECTION HISTORY · ASTM E381 COMPLIANCE TELEMETRY
+        </p>
+      </div>
+
+      <!-- ACTION BUTTONS -->
+      <div class="data-log-header-actions">
+        <button
+          id="btn-export-csv"
+          class="btn-data-log-action btn-primary-tool"
+          title="Download complete telemetry history as CSV"
+        >
+          📥 EXPORT CSV
+        </button>
+
+        <button
+          id="btn-clear-log"
+          class="btn-data-log-action btn-danger-tool"
+          title="Clear all stored inspection records"
+        >
+          🗑️ CLEAR DATA LOG
+        </button>
+
+        <a
+          href="/"
+          class="btn-data-log-action btn-nav-back"
+        >
+          ← INSPECTION STUDIO
+        </a>
+      </div>
+    </div>
+
+    <!-- SUMMARY CARDS (KPIs) -->
+    <div class="telemetry-kpi-grid">
+      <div class="telemetry-kpi-card kpi-total">
+        <div class="kpi-label">TOTAL INSPECTED</div>
+        <div id="stat-total" class="kpi-val">0</div>
+        <div class="kpi-sub">BATCH TOTAL</div>
+      </div>
+
+      <div class="telemetry-kpi-card kpi-pass">
+        <div class="kpi-label">🟢 PASS</div>
+        <div id="stat-pass" class="kpi-val val-pass">0</div>
+        <div class="kpi-sub">ASTM COMPLIANT</div>
+      </div>
+
+      <div class="telemetry-kpi-card kpi-fail">
+        <div class="kpi-label">🔴 FAIL</div>
+        <div id="stat-fail" class="kpi-val val-fail">0</div>
+        <div class="kpi-sub">DEFECT REJECTED</div>
+      </div>
+
+      <div class="telemetry-kpi-card kpi-review">
+        <div class="kpi-label">🟠 REVIEW</div>
+        <div id="stat-review" class="kpi-val val-review">0</div>
+        <div class="kpi-sub">QA AUDIT REQ.</div>
+      </div>
+
+      <div class="telemetry-kpi-card kpi-rate">
+        <div class="kpi-label">PASS RATE</div>
+        <div id="stat-pass-rate" class="kpi-val val-rate">0%</div>
+        <div class="kpi-sub">YIELD EFFICIENCY</div>
+      </div>
+    </div>
+
+    <!-- DATA LOG SECTION -->
+    <div class="data-log-section-heading">
+      <h2 class="data-log-section-title">
+        <span>📋</span> INSPECTION DATA LOG
+        <span id="log-count-badge" style="font-size:0.75rem; background:rgba(0, 240, 255, 0.12); color:#00f0ff; border:1px solid rgba(0, 240, 255, 0.3); padding:2px 8px; border-radius:12px; font-weight:600;">
+          0 RECORDS
+        </span>
+      </h2>
+      <div style="font-family:'JetBrains Mono', monospace; font-size:0.75rem; color:#8b949e;">
+        AUTO-SAVED IN INDUSTRIAL STORAGE
+      </div>
+    </div>
+
+    <!-- DATA LOG TABLE -->
+    <div class="data-log-table-container">
+      <div class="telemetry-table-wrap" style="max-height: 560px;">
+        <table class="telemetry-table">
+          <thead>
+            <tr>
+              <th style="min-width: 95px;">TIME</th>
+              <th style="min-width: 140px;">PRODUCT ID</th>
+              <th style="min-width: 110px;">OPERATOR</th>
+              <th style="min-width: 110px;">DECISION</th>
+              <th style="min-width: 90px;">STATUS</th>
+              <th style="min-width: 150px;">DEFECT TYPE</th>
+              <th style="min-width: 140px;">CONFIDENCE</th>
+              <th style="min-width: 110px;">SEVERITY</th>
+              <th style="min-width: 130px;">AFFECTED AREA</th>
+              <th style="min-width: 170px;">LOCATION</th>
+            </tr>
+          </thead>
+          <tbody id="telemetry-table-body">
+            <tr id="empty-state-row">
+              <td colspan="10" class="telemetry-empty">
+                No inspection records logged in this session yet.<br>
+                Upload a sample or start camera inspection in the <a href="/" style="color:#00f0ff; text-decoration:underline;">Inspection Studio</a> to generate records.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Load Persistence Service & Page Script -->
+  <script src="data-log-service.js"></script>
+  <script src="auth-guard.js"></script>
+  <script src="data-log-page.js"></script>
+  <script src="header-status.js"></script>
+</body>
+</html>

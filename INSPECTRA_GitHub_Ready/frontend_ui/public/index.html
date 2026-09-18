@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>INSPECTRA — AI-Powered Visual Intelligence for Manufacturing Quality</title>
+  <link rel="icon" type="image/png" href="/assets/inspectra-logo.png">
+
+  <meta
+    name="description"
+    content="AI-powered visual intelligence for steel and metal manufacturing quality inspection."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+  <script src="inspectra-auth.js"></script>
+</head>
+
+<body class="industrial-theme">
+
+  <!-- =========================================================
+       PRELOADER
+  ========================================================== -->
+
+  <div id="preloader" class="preloader-overlay">
+
+    <div class="preloader-card">
+
+      <div class="preloader-brand">
+        <div class="brand-glyph"></div>
+        <span class="brand-text">INSPECTRA</span>
+      </div>
+
+      <div class="preloader-status">
+        <span id="preloader-label">INITIALIZING OPTICAL STREAM</span>
+        <span id="preloader-percent">0%</span>
+      </div>
+
+      <div class="preloader-bar-track">
+        <div id="preloader-bar" class="preloader-bar-fill"></div>
+      </div>
+
+      <div class="preloader-metrics">
+        <span>
+          FRAMES BUFFERED:
+          <strong id="preloader-frames-count">0 / 89</strong>
+        </span>
+
+        <span>
+          RESOLUTION:
+          <strong>1280 × 720 HD</strong>
+        </span>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       HEADER
+  ========================================================== -->
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="brand-logo" id="nav-brand" title="INSPECTRA Vision OS">
+        <img src="/assets/inspectra-logo.png" alt="INSPECTRA Official Logo" class="header-inspectra-logo">
+        <div class="logo-text-group">
+          <span class="logo-name">INSPECTRA</span>
+          <span class="logo-tag">VISION OS // v4.2</span>
+        </div>
+      </a>
+
+      <button id="btn-nav-toggle" class="btn-nav-toggle" aria-label="Toggle Navigation">☰</button>
+
+      <nav class="nav-links">
+        <a href="/" class="nav-item active" title="Image Upload Inspection Studio">
+          Inspection Studio
+        </a>
+        <a href="/live-inspection" class="nav-item" title="Continuous Live Camera Machine-Vision">
+          Live Inspection
+        </a>
+        <a href="/product-analysis" class="nav-item" title="Product-Level Performance Analytics">
+          Product Analysis
+        </a>
+        <a href="/data-log" class="nav-item nav-item-data-log" id="nav-data-log" title="Complete Production History">
+          Data Log
+        </a>
+        <a href="/reports" class="nav-item" title="Quality Inspection Audit Reports">
+          Reports
+        </a>
+        <a href="/standards" class="nav-item" title="Inspection Methodology & Criteria">
+          Standards
+        </a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="system-status-cluster" id="system-status-cluster">
+          <div class="system-status-indicator" id="status-ai" title="FastAPI Local AI Engine">
+            <span class="status-beacon beacon-emerald" id="status-beacon-ai"></span>
+            <span class="status-label" id="status-label-ai">AI ONLINE</span>
+          </div>
+          <div class="system-status-indicator indicator-cyan" id="status-cam" title="Industrial Vision Camera">
+            <span class="status-beacon beacon-cyan" id="status-beacon-cam"></span>
+            <span class="status-label label-cyan" id="status-label-cam">CAMERA READY</span>
+          </div>
+          <div class="system-status-indicator indicator-cyan" id="status-log" title="Production Data Log">
+            <span class="status-beacon beacon-cyan" id="status-beacon-log"></span>
+            <span class="status-label label-cyan" id="status-label-log">DATA LOG ACTIVE</span>
+          </div>
+        </div>
+
+        <div class="user-profile-group" id="header-user-profile" style="display: flex;">
+          <div class="user-avatar-badge">👤</div>
+          <div class="user-meta-info">
+            <span class="user-operator-title" id="header-operator-name">Santhosh</span>
+            <span class="user-operator-role" id="header-operator-role">AI Inspection Operator</span>
+          </div>
+          <button type="button" class="btn-logout" title="End authenticated session">LOGOUT</button>
+        </div>
+
+        <button
+          id="btn-api-config"
+          class="btn-icon"
+          title="AI Backend Status"
+          aria-label="AI Settings"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle
+              cx="12"
+              cy="12"
+              r="3"
+            ></circle>
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0 .33-1.82V9a1.65 1.65 0 0 0 1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+            ></path>
+          </svg>
+          <span class="btn-text">
+            AI Backend
+          </span>
+        </button>
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================================================
+       HERO
+  ========================================================== -->
+
+  <section
+    id="hero"
+    class="hero-scroll-container"
+  >
+
+    <div
+      class="hero-sticky-stage"
+      id="hero-stage"
+    >
+
+      <canvas
+        id="hero-canvas"
+        class="hero-canvas"
+        aria-label="INSPECTRA Disk Rolling Hero Animation"
+      ></canvas>
+
+
+      <div class="stage-grid-overlay"></div>
+      <div class="stage-vignette"></div>
+
+
+      <div
+        class="hero-content-layer"
+        id="hero-content"
+      >
+
+        <div class="hero-brand-pill">
+
+          <span class="pill-dot"></span>
+
+          <span class="pill-text">
+            INSPECTRA MANUFACTURING INTELLIGENCE
+          </span>
+
+        </div>
+
+
+        <h1
+          class="hero-heading"
+          id="hero-heading"
+        >
+          See Every Surface.
+        </h1>
+
+
+        <p
+          class="hero-subheading"
+          id="hero-subheading"
+        >
+          AI-powered visual intelligence for manufacturing quality inspection.
+        </p>
+
+
+        <div
+          class="hero-scroll-prompt"
+          id="hero-scroll-prompt"
+        >
+
+          <div class="scroll-mouse">
+            <div class="scroll-wheel"></div>
+          </div>
+
+          <span class="scroll-prompt-text">
+            Scroll to inspect
+          </span>
+
+          <div class="scroll-chevrons">
+            <span class="chev chev-1"></span>
+            <span class="chev chev-2"></span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           HERO HUD
+      ====================================================== -->
+
+      <div class="hud-layer">
+
+        <div class="hud-box hud-top-left">
+
+          <div class="hud-line">
+            <span class="hud-label">
+              TARGET:
+            </span>
+
+            <span class="hud-val">
+              PRECISION ALLOY DISK
+            </span>
+          </div>
+
+          <div class="hud-line">
+
+            <span class="hud-label">
+              MODE:
+            </span>
+
+            <span class="hud-val text-cyan">
+              AI VISUAL INSPECTION
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="hud-box hud-top-right">
+
+          <div class="hud-line">
+
+            <span class="hud-label">
+              STREAM:
+            </span>
+
+            <span class="hud-val text-emerald">
+              SYNCHRONIZED
+            </span>
+
+          </div>
+
+          <div class="hud-line">
+
+            <span class="hud-label">
+              PIPELINE:
+            </span>
+
+            <span class="hud-val">
+              VISION AI
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="hud-box hud-bottom-left">
+
+          <div class="hud-gauge">
+
+            <div class="gauge-label">
+              SCAN SEQUENCE
+            </div>
+
+            <div class="frame-readout">
+
+              <span
+                id="hud-current-frame"
+                class="frame-cur"
+              >
+                000
+              </span>
+
+              <span class="frame-slash">
+                /
+              </span>
+
+              <span
+                id="hud-total-frames"
+                class="frame-tot"
+              >
+                088
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="hud-progress-track">
+
+            <div
+              id="hud-progress-fill"
+              class="hud-progress-fill"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <div class="hud-box hud-bottom-right">
+
+          <div
+            class="stage-state-badge"
+            id="hud-stage-badge"
+          >
+
+            <span class="state-indicator"></span>
+
+            <span id="hud-stage-text">
+              HERO STAGE PINNED
+            </span>
+
+          </div>
+
+          <div
+            class="hud-hint"
+            id="hud-unlock-hint"
+          >
+            CONTINUE SCROLLING TO UNLOCK INSPECTOR
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       MAIN CONTENT
+  ========================================================== -->
+
+  <main
+    class="main-content-wrapper"
+    id="main-content"
+  >
+
+
+    <!-- =======================================================
+         INSPECTION STUDIO
+    ======================================================== -->
+
+    <section
+      id="inspection-section"
+      class="inspection-section"
+    >
+
+      <div
+        class="section-container inspection-centered-container"
+      >
+
+        <div class="inspect-surface-card">
+
+
+          <!-- CARD HEADER -->
+
+          <div class="card-header-centered">
+
+            <div class="inspection-badge">
+
+              <span class="badge-dot"></span>
+
+              <span>
+                SURFACE VERIFICATION SYSTEM
+              </span>
+
+            </div>
+
+
+            <h2 class="card-main-title">
+              INSPECT SURFACE
+            </h2>
+
+
+            <p class="card-subtitle">
+              Upload a steel or metal surface image for inspection
+            </p>
+
+          </div>
+
+
+          <!-- =================================================
+               V2.0 MODE SELECTOR
+          ================================================== -->
+
+          <div
+            class="inspection-mode-selector"
+            style="
+              display:flex;
+              justify-content:center;
+              gap:12px;
+              margin:24px 0;
+              flex-wrap:wrap;
+            "
+          >
+
+            <button
+              type="button"
+              id="btn-image-mode"
+              class="btn-preview-action btn-inspect"
+              style="min-width:190px;"
+            >
+              📁 IMAGE INSPECTION
+            </button>
+
+
+            <button
+              type="button"
+              id="btn-camera-mode"
+              class="btn-preview-action btn-change"
+              style="min-width:190px;"
+            >
+              🎥 LIVE CAMERA
+            </button>
+
+          </div>
+
+
+          <!-- =================================================
+               IMAGE INSPECTION AREA
+          ================================================== -->
+
+          <div id="image-inspection-mode">
+
+
+            <!-- UPLOAD DROPZONE -->
+
+            <div
+              id="dropzone"
+              class="centered-upload-dropzone"
+              tabindex="0"
+              role="button"
+              aria-label="Upload steel or metal surface image"
+            >
+
+              <input
+                type="file"
+                id="file-input"
+                accept="image/jpeg,image/jpg,image/png"
+                style="display:none;"
+              />
+
+
+              <div
+                class="upload-dropzone-content"
+                id="dropzone-empty-state"
+              >
+
+                <div class="upload-icon-container">
+
+                  <svg
+                    width="48"
+                    height="48"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  >
+
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+
+                    <polyline points="17 8 12 3 7 8"></polyline>
+
+                    <line
+                      x1="12"
+                      y1="3"
+                      x2="12"
+                      y2="15"
+                    ></line>
+
+                  </svg>
+
+                </div>
+
+
+                <h3 class="dropzone-text">
+                  Drag &amp; Drop Image Here
+                </h3>
+
+
+                <div class="dropzone-divider">
+                  <span>OR</span>
+                </div>
+
+
+                <button
+                  type="button"
+                  id="btn-choose-image"
+                  class="btn-choose-image"
+                >
+
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+
+                    <rect
+                      x="3"
+                      y="3"
+                      width="18"
+                      height="18"
+                      rx="2"
+                    ></rect>
+
+                    <circle
+                      cx="8.5"
+                      cy="8.5"
+                      r="1.5"
+                    ></circle>
+
+                    <polyline points="21 15 16 10 5 21"></polyline>
+
+                  </svg>
+
+                  <span>
+                    CHOOSE IMAGE
+                  </span>
+
+                </button>
+
+
+                <div class="supported-formats-text">
+                  JPG • JPEG • PNG
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- UPLOADED IMAGE PREVIEW -->
+
+            <div
+              id="image-preview-panel"
+              class="image-preview-panel"
+              style="display:none;"
+            >
+
+              <div class="preview-meta-header">
+
+                <div class="preview-file-tags">
+
+                  <div class="file-tag-item">
+                    <span class="tag-label">FILE:</span>
+                    <span
+                      id="meta-filename"
+                      class="tag-value"
+                    >
+                      surface_plate_01.jpg
+                    </span>
+                  </div>
+
+
+                  <div class="file-tag-item">
+                    <span class="tag-label">FORMAT:</span>
+                    <span
+                      id="meta-format"
+                      class="tag-value text-cyan"
+                    >
+                      JPEG
+                    </span>
+                  </div>
+
+
+                  <div class="file-tag-item">
+                    <span class="tag-label">DIMENSIONS:</span>
+                    <span
+                      id="meta-dimensions"
+                      class="tag-value"
+                    >
+                      -- × --
+                    </span>
+                  </div>
+
+
+                  <div class="file-tag-item">
+                    <span class="tag-label">SIZE:</span>
+                    <span
+                      id="meta-filesize"
+                      class="tag-value"
+                    >
+                      -- MB
+                    </span>
+                  </div>
+
+                </div>
+
+
+                <div class="preview-status-indicator">
+
+                  <span class="status-pulse-dot"></span>
+
+                  <span>
+                    IMAGE READY
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <div class="preview-display-viewport">
+
+                <img
+                  id="exact-uploaded-preview"
+                  src=""
+                  alt="Exact uploaded steel surface image"
+                  class="exact-uploaded-image"
+                />
+
+
+                <div class="viewport-hud-corner corner-tl"></div>
+                <div class="viewport-hud-corner corner-tr"></div>
+                <div class="viewport-hud-corner corner-bl"></div>
+                <div class="viewport-hud-corner corner-br"></div>
+
+              </div>
+
+
+              <div class="preview-action-controls">
+
+                <button
+                  type="button"
+                  id="btn-run-inspection"
+                  class="btn-preview-action btn-inspect"
+                >
+
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="9"
+                    ></circle>
+
+                    <path d="M12 7v5l3 2"></path>
+
+                  </svg>
+
+                  <span>
+                    RUN AI INSPECTION
+                  </span>
+
+                </button>
+
+
+                <button
+                  type="button"
+                  id="btn-change-image"
+                  class="btn-preview-action btn-change"
+                >
+
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+
+                    <polyline points="17 8 12 3 7 8"></polyline>
+
+                    <line
+                      x1="12"
+                      y1="3"
+                      x2="12"
+                      y2="15"
+                    ></line>
+
+                  </svg>
+
+                  <span>
+                    CHANGE IMAGE
+                  </span>
+
+                </button>
+
+
+                <button
+                  type="button"
+                  id="btn-remove-image"
+                  class="btn-preview-action btn-remove"
+                >
+
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+
+                    <polyline points="3 6 5 6 21 6"></polyline>
+
+                    <path
+                      d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                    ></path>
+
+                  </svg>
+
+                  <span>
+                    REMOVE IMAGE
+                  </span>
+
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               V2.0 LIVE CAMERA AREA
+          ================================================== -->
+
+          <div
+            id="camera-inspection-mode"
+            style="display:none;"
+          >
+
+            <div
+              class="camera-panel"
+              style="
+                width:100%;
+                max-width:900px;
+                margin:0 auto;
+              "
+            >
+
+              <div
+                class="camera-status-bar"
+                style="
+                  display:flex;
+                  justify-content:space-between;
+                  align-items:center;
+                  gap:12px;
+                  padding:12px 16px;
+                  margin-bottom:14px;
+                  border:1px solid rgba(255,255,255,.1);
+                  border-radius:10px;
+                "
+              >
+
+                <span>
+                  🎥 LIVE CAMERA
+                </span>
+
+                <span
+                  id="camera-status"
+                  class="text-cyan"
+                >
+                  CAMERA READY
+                </span>
+
+              </div>
+
+
+              <div
+                class="camera-viewport"
+                style="
+                  position:relative;
+                  width:100%;
+                  aspect-ratio:16/9;
+                  overflow:hidden;
+                  border-radius:14px;
+                  background:#05080b;
+                  border:1px solid rgba(255,255,255,.12);
+                "
+              >
+
+                <video
+                  id="camera-video"
+                  autoplay
+                  playsinline
+                  muted
+                  style="
+                    width:100%;
+                    height:100%;
+                    object-fit:contain;
+                    display:block;
+                    position:relative;
+                    z-index:1;
+                    background:#000;
+                  "
+                ></video>
+
+
+                <canvas
+                  id="camera-canvas"
+                  style="
+                    display:none;
+                    position:absolute;
+                    inset:0;
+                    width:100%;
+                    height:100%;
+                    object-fit:contain;
+                    pointer-events:none;
+                    z-index:2;
+                    background:transparent;
+                  "
+                ></canvas>
+
+
+                <!-- CAMERA RETICLE -->
+
+                <div
+                  id="camera-reticle"
+                  class="camera-reticle"
+                  style="
+                    position:absolute;
+                    inset:12%;
+                    border:1px solid rgba(255,255,255,.22);
+                    pointer-events:none;
+                    z-index:3;
+                  "
+                ></div>
+
+
+                <div
+                  id="camera-reticle-center"
+                  class="camera-reticle-center"
+                  style="
+                    position:absolute;
+                    left:50%;
+                    top:50%;
+                    width:18px;
+                    height:18px;
+                    transform:translate(-50%,-50%);
+                    border:1px solid rgba(255,255,255,.5);
+                    border-radius:50%;
+                    pointer-events:none;
+                    z-index:3;
+                  "
+                ></div>
+
+              </div>
+
+
+              <div
+                class="camera-controls"
+                style="
+                  display:flex;
+                  justify-content:center;
+                  gap:12px;
+                  margin-top:18px;
+                  flex-wrap:wrap;
+                "
+              >
+
+                <button
+                  type="button"
+                  id="btn-start-camera"
+                  class="btn-preview-action btn-inspect"
+                >
+                  🎥 START CAMERA
+                </button>
+
+
+                <button
+                  type="button"
+                  id="btn-capture-frame"
+                  class="btn-preview-action btn-change"
+                  disabled
+                >
+                  📸 CAPTURE FRAME
+                </button>
+
+
+                <button
+                  type="button"
+                  id="btn-start-live-detection"
+                  class="btn-preview-action btn-live-inspect"
+                  disabled
+                  title="Continuously analyze the live camera stream asynchronously with intelligent visual change detection"
+                >
+                  ⚡ START LIVE DETECTION
+                </button>
+
+
+                <button
+                  type="button"
+                  id="btn-stop-live-detection"
+                  class="btn-preview-action btn-remove"
+                  style="display:none;"
+                  disabled
+                >
+                  ⏹ STOP LIVE DETECTION
+                </button>
+
+
+                <button
+                  type="button"
+                  id="btn-stop-camera"
+                  class="btn-preview-action btn-remove"
+                  disabled
+                >
+                  ⏹ STOP CAMERA
+                </button>
+
+              </div>
+
+
+              <div
+                id="camera-capture-message"
+                style="
+                  margin-top:14px;
+                  text-align:center;
+                  opacity:.75;
+                "
+              >
+                Start the camera to begin live inspection.
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               AI RESULT
+          ================================================== -->
+
+          <div
+            id="inspection-result-panel"
+            class="inspection-result-panel"
+            style="display:none;"
+          >
+
+            <div class="result-header-row">
+
+              <div>
+
+                <div class="result-kicker">
+                  AI INSPECTION RESULT
+                </div>
+
+                <div
+                  id="result-verdict"
+                  class="result-verdict"
+                >
+                  READY
+                </div>
+
+              </div>
+
+
+              <div
+                id="result-source"
+                class="result-source"
+              >
+                INSPECTRA LOCAL AI
+              </div>
+
+            </div>
+
+
+            <div
+              id="result-summary"
+              class="result-summary"
+            >
+              Upload an image and run the inspection.
+            </div>
+
+
+            <div class="result-metrics-grid">
+
+              <div class="result-metric">
+                <span>PRODUCT ID</span>
+                <strong id="result-product-id" style="color:#00f0ff; font-family:'JetBrains Mono', monospace;">—</strong>
+              </div>
+
+
+              <div class="result-metric">
+                <span>PRODUCT DETECTED</span>
+                <strong id="result-product-detected">—</strong>
+              </div>
+
+
+              <div class="result-metric">
+                <span>PRODUCT CONFIDENCE</span>
+                <strong id="result-product-confidence">—</strong>
+              </div>
+
+
+              <div class="result-metric">
+                <span>PRODUCT BOUNDING BOX</span>
+                <strong id="result-product-box">—</strong>
+              </div>
+
+
+              <div class="result-metric">
+                <span>DEFECT</span>
+                <strong id="result-defect">—</strong>
+              </div>
+
+
+              <div class="result-metric">
+                <span>CONFIDENCE</span>
+                <strong id="result-confidence">—</strong>
+              </div>
+
+
+              <div class="result-metric">
+                <span>ANOMALY SCORE</span>
+                <strong id="result-anomaly">—</strong>
+              </div>
+
+
+              <div class="result-metric">
+                <span>SEVERITY</span>
+                <strong id="result-severity">—</strong>
+              </div>
+
+
+              <div class="result-metric">
+                <span>SURFACE AREA</span>
+                <strong id="result-area">—</strong>
+              </div>
+
+
+              <div class="result-metric">
+                <span>DEFECT LOCATION</span>
+                <strong id="result-location">—</strong>
+              </div>
+
+            </div>
+
+
+            <div
+              id="result-action"
+              class="result-action-line"
+            ></div>
+
+          </div>
+
+
+          <!-- =================================================
+               MANUFACTURING TELEMETRY SUMMARY BANNER
+          ================================================== -->
+          <div
+            id="inspection-data-log-banner"
+            class="telemetry-summary-banner"
+          >
+            <div class="summary-banner-info">
+              <div class="summary-banner-title">
+                <span class="live-dot" style="width:8px; height:8px; border-radius:50%; background:#00f0ff; box-shadow:0 0 10px #00f0ff;"></span>
+                PRODUCTION TELEMETRY ACTIVE
+              </div>
+              <p class="summary-banner-desc">
+                Continuous session audit logging with persistent industrial storage.
+              </p>
+            </div>
+
+            <div class="summary-banner-metrics">
+              <div class="summary-pill">
+                TOTAL: <strong id="studio-stat-total" style="color:#00f0ff; margin-left:4px;">0</strong>
+              </div>
+              <div class="summary-pill">
+                PASS: <strong id="studio-stat-pass" style="color:#00e676; margin-left:4px;">0</strong>
+              </div>
+              <div class="summary-pill">
+                FAIL: <strong id="studio-stat-fail" style="color:#ff1744; margin-left:4px;">0</strong>
+              </div>
+              <div class="summary-pill">
+                REVIEW: <strong id="studio-stat-review" style="color:#ff9100; margin-left:4px;">0</strong>
+              </div>
+              <div class="summary-pill">
+                YIELD: <strong id="studio-stat-rate" style="color:#00f0ff; margin-left:4px;">0%</strong>
+              </div>
+
+              <a
+                href="/data-log"
+                class="btn-data-log-action btn-primary-tool"
+                style="padding:8px 16px; font-size:0.82rem; text-decoration:none;"
+              >
+                OPEN DATA LOG ➔
+              </a>
+            </div>
+          </div>
+
+
+          <div
+            id="upload-validation-error"
+            class="validation-error-banner"
+            style="display:none;"
+          ></div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         STANDARDS
+    ======================================================== -->
+
+    <section
+      id="specs-section"
+      class="specs-section"
+    >
+
+      <div class="section-container">
+
+        <div class="specs-header">
+
+          <div class="section-badge">
+            QUALITY CRITERIA
+          </div>
+
+          <h3 class="specs-title">
+            Industrial Metal Defect Standards
+          </h3>
+
+          <p class="specs-desc">
+            INSPECTRA provides AI-assisted visual inspection for steel and metal manufacturing surfaces.
+          </p>
+
+        </div>
+
+
+        <div class="standards-grid">
+
+          <div class="standard-card">
+
+            <div class="card-tag">
+              ASTM E381
+            </div>
+
+            <h4>
+              Macroetch Testing
+            </h4>
+
+            <p>
+              Reference framework for evaluating metallurgical surface and internal discontinuities.
+            </p>
+
+          </div>
+
+
+          <div class="standard-card">
+
+            <div class="card-tag">
+              EN 10163
+            </div>
+
+            <h4>
+              Hot-Rolled Steel Plates
+            </h4>
+
+            <p>
+              Surface quality requirements for hot-rolled steel products.
+            </p>
+
+          </div>
+
+
+          <div class="standard-card">
+
+            <div class="card-tag">
+              ISO 9001:2015
+            </div>
+
+            <h4>
+              Quality Management
+            </h4>
+
+            <p>
+              Supports traceable digital inspection workflows within quality-management processes.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         FOOTER
+    ======================================================== -->
+
+    <footer class="site-footer">
+
+      <div class="section-container footer-inner">
+
+        <div class="footer-brand">
+
+          <img src="/assets/inspectra-logo.png" alt="INSPECTRA" class="footer-inspectra-logo">
+
+          <span class="footer-name">
+            INSPECTRA
+          </span>
+
+          <span class="footer-copy">
+            © 2026 INSPECTRA VISUAL INTELLIGENCE. ALL RIGHTS RESERVED.
+          </span>
+
+        </div>
+
+
+        <div class="footer-links">
+
+          <span>
+            Engineered for Heavy Manufacturing &amp; Rolling Mills
+          </span>
+
+        </div>
+
+      </div>
+
+    </footer>
+
+  </main>
+
+
+  <!-- =========================================================
+       AI BACKEND MODAL
+  ========================================================== -->
+
+  <div
+    id="api-modal"
+    class="modal-overlay"
+    style="display:none;"
+  >
+
+    <div class="modal-card">
+
+      <div class="modal-header">
+
+        <div class="modal-title-group">
+
+          <h3>
+            AI Backend Status
+          </h3>
+
+          <p>
+            INSPECTRA is connected to the local FastAPI + PyTorch inspection engine.
+          </p>
+
+        </div>
+
+
+        <button
+          id="btn-close-modal"
+          class="btn-close"
+          aria-label="Close modal"
+        >
+          &times;
+        </button>
+
+      </div>
+
+
+      <div class="modal-body">
+
+        <div
+          id="api-modal-status"
+          class="api-status-box"
+          style="display:block;"
+        >
+          LOCAL AI ENGINE • FASTAPI :8000
+        </div>
+
+
+        <p
+          class="input-tip"
+          style="margin-top:14px;"
+        >
+          Engine: MobileNetV2 classifier + Autoencoder anomaly scan + Grad-CAM localization.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script src="data-log-service.js"></script>
+  <script src="auth-guard.js"></script>
+  <script src="app.js?v=2.2"></script>
+  <script src="header-status.js"></script>
+</body>
+</html>

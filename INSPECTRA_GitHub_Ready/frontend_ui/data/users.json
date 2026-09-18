@@ -1,0 +1,92 @@
+[
+  {
+    "id": "OP-2026-001",
+    "name": "Santhosh",
+    "email": "santhosh@inspectra.ai",
+    "username": "santhosh",
+    "password_hash": "a7074ab8cd0e9357df8ff1d1e436dc88c35d782d1e4d5c8c108e60d73b776c3319a5da0dabff927a02691a3edfded4b47a6442dae8295bfaed2fe496741dd74a",
+    "salt": "1ba26532ce960c4c017321205ea16b8e",
+    "role": "AI Inspection Operator",
+    "created_at": "2026-09-11T00:23:30.920Z"
+  },
+  {
+    "id": "OP-2026-002",
+    "name": "Lead Operator",
+    "email": "operator1@inspectra.ai",
+    "username": "operator1",
+    "password_hash": "f1d8eaec6a07f62a9d31e5bf2e4f23197e2d142c3675d2f915cc6e72fdf9c25105beee2d479e948b25b547cbdbb5567d895edc6195bac212d9a993894010cbdd",
+    "salt": "66b3e6f89be2f129b483b339a6628a86",
+    "role": "AI Inspection Operator",
+    "created_at": "2026-09-11T00:23:30.964Z"
+  },
+  {
+    "id": "OP-1789086691265",
+    "name": "Test Inspection Operator",
+    "email": "operator_1789086691@inspectra.ai",
+    "username": "operator_1789086691",
+    "password_hash": "886fa4ef1d04c4d2420ee933260b1d0c7effe995b8ecd4568368756a054eb251d664a0441db62a14fe49d5ab4afa9e166fda763ea6006c3c4f8d9a4e8f1cf520",
+    "salt": "16e7b79c1a3eae4fa675c7a636e77d11",
+    "role": "AI Inspection Operator",
+    "created_at": "2026-09-11T00:31:31.265Z"
+  },
+  {
+    "id": "OP-1789087078565",
+    "name": "Test Inspection Operator",
+    "email": "operator_1789087078@inspectra.ai",
+    "username": "operator_1789087078",
+    "password_hash": "8e0e67e2a8f9f18e98b3d313d5d9744bbac26e05f4b731d363c4c34c1ffafd9f067a54a1fb15a128793e92e05b478f9af57685b554628d1a981e9ecb0522b2de",
+    "salt": "33bdd5936b02e77ad046573b5a6dde43",
+    "role": "AI Inspection Operator",
+    "created_at": "2026-09-11T00:37:58.565Z"
+  },
+  {
+    "id": "OP-1789088457592",
+    "name": "Test Inspection Operator",
+    "email": "operator_1789088457@inspectra.ai",
+    "username": "operator_1789088457",
+    "password_hash": "632cefece6130ef948f41397a60a175e6edde33b7ab4bb3015e8fe919a89854ec601d4300b07d62525c509f5ac6160006340bc925bd64afdd2b49e8e9f75fb7a",
+    "salt": "f29e0fce37cc540cab8668168a12373f",
+    "role": "AI Inspection Operator",
+    "created_at": "2026-09-11T01:00:57.592Z"
+  },
+  {
+    "id": "OP-1789089198642",
+    "name": "Test Inspection Operator",
+    "email": "operator_1789089198@inspectra.ai",
+    "username": "operator_1789089198",
+    "password_hash": "a925ccd41d3a27d391b81a7bb98186419c27253cd2d853d547aeb9a2bb0a06e3ba440b37ce2aff0ad878c08f01f39c85bf85678574001ea87e0e689b6d5065e7",
+    "salt": "e85140362ec9f727b0e5cedb7cade135",
+    "role": "AI Inspection Operator",
+    "created_at": "2026-09-11T01:13:18.642Z"
+  },
+  {
+    "id": "OP-1789089833425",
+    "name": "Test Inspection Operator",
+    "email": "operator_1789089833@inspectra.ai",
+    "username": "operator_1789089833",
+    "password_hash": "a0d44e98b59b43d4d496b1a12e16d10852a26f01954558b7781e039a30613d71f0fd8dbe3fd8ed9ea3b2d6ced3e04228e25302539865625918533ce9c8d2241f",
+    "salt": "162e151473bfbc14b3c3ef7b5f2f8fdb",
+    "role": "AI Inspection Operator",
+    "created_at": "2026-09-11T01:23:53.425Z"
+  },
+  {
+    "id": "OP-1789092067069",
+    "name": "Test Inspection Operator",
+    "email": "operator_1789092066@inspectra.ai",
+    "username": "operator_1789092066",
+    "password_hash": "7fd413f1563165a765f476a5f3b795837ef98cf0b72a7016d3b72fe20782881f320cf7787459c8ca716576fff3f16f1dd35dbd846d371032450d7d398588d11f",
+    "salt": "453bec037173f82127a82f009930529f",
+    "role": "AI Inspection Operator",
+    "created_at": "2026-09-11T02:01:07.069Z"
+  },
+  {
+    "id": "OP-1789092692604",
+    "name": "Test Inspection Operator",
+    "email": "operator_1789092692@inspectra.ai",
+    "username": "operator_1789092692",
+    "password_hash": "cdbdfca7917e72c6dbd4d6b9897e91a49556717b592b4f426d7706578b36e184268eca78745fe4d5632c6d05776d51481f53bb4e160aa740b69a7d194c9aa6fa",
+    "salt": "efff1cec242a9a0fa02fbc9782e4b4f5",
+    "role": "AI Inspection Operator",
+    "created_at": "2026-09-11T02:11:32.605Z"
+  }
+]
